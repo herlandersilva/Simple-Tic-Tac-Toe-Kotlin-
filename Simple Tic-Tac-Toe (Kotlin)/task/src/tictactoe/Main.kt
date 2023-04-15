@@ -1,5 +1,9 @@
 package tictactoe
 
 fun main() {
-    // write your code here
+    val board = mutableListOf(
+        mutableListOf('X', 'O', 'X'),
+        mutableListOf('O', 'X', 'O'),
+        mutableListOf('X', 'X', 'O')
+    ).forEach { line -> line.joinToString(" ").let(::println) }
 }

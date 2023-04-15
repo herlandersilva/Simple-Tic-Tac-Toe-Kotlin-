@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: "fun main() {    \n    // write your code here\n}"
+  learner_created: false
+- name: src/hyperskill-4606-test-04.txt
+  visible: true
+  learner_created: true
+- name: src/hyperskill-4606-test-04 (1).txt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/4606#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: "Sat, 15 Apr 2023 01:11:49 UTC"
+record: -1
+submission_language: kotlin
