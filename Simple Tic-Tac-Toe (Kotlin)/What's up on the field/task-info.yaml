@@ -315,6 +315,79 @@ files:
         }
     }
   learner_created: false
-feedback_link: https://hyperskill.org/projects/123/stages/656/implement#comment
+- name: src/tictactoe/Util.kt
+  visible: true
+  text: |-
+    package tictactoe
+
+    object Util {
+        private var sendToCheck = true
+
+        fun ask(title: String): String {
+            println(title)
+            return readln().trim()
+        }
+
+        fun readln(): String {
+            if (!sendToCheck) {
+                print("> ")
+            }
+            return kotlin.io.readln()
+        }
+
+        fun disableToSend() { this.sendToCheck = false }
+        fun enableToSend() { this.sendToCheck = true }
+    }
+  learner_created: true
+- name: src/tictactoe/TicTacToe.kt
+  visible: true
+  text: |-
+    package tictactoe
+
+    class TicTacToe(val lines: Int, val cols: Int = lines) {
+        val board = Board(lines, cols)
+
+        override fun toString(): String {
+            return board.toString()
+        }
+
+        fun fillBoard(_moves: CharArray) {
+            val moves = _moves.toMutableList().chunked(3)
+            board.setBoard(moves)
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/Board.kt
+  visible: true
+  text: |
+    package tictactoe
+
+    data class Board(val lines: Int, val cols: Int = lines) {
+        val boardData: MutableList<MutableList<Char>> = emptyList<MutableList<Char>>().toMutableList()
+        override fun toString(): String {
+            val board = StringBuilder()
+                .appendLine("-".repeat(cols + 6))
+            boardData.forEach { board.appendLine(it.joinToString(" ", "| ", " |")) }
+            board.appendLine("-".repeat(cols + 6))
+
+            return board.toString()
+        }
+
+        fun draw() {
+            toString().let(::println)
+        }
+
+        fun setMove(line: Int, col: Int, play: Char) {
+            boardData[line][col] = play
+        }
+
+        fun setBoard(moves: List<List<Char>>) {
+            var _moves: MutableList<MutableList<Char>> = mutableListOf()
+            moves.forEach { _moves.add(it.toMutableList()) }
+            boardData.addAll(_moves)
+        }
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/10477#comment
 status: Unchecked
-record: -1
+record: 3
