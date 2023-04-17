@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TicTacToeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-17T00:28:40" hostname="MBPdeHerlander.home" time="0.443">
+<testsuite name="TicTacToeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-17T00:40:09" hostname="MBPdeHerlander.home" time="0.344">
   <properties/>
-  <testcase name="start" classname="TicTacToeTest" time="0.443"/>
+  <testcase name="start" classname="TicTacToeTest" time="0.344"/>
   <system-out><![CDATA[?[1;31m
 Start test 1?[0m
-> > O_OXXO_XX
+> O_OXXO_XX
 ---------
 | O _ O |
 | X X O |
@@ -13,7 +13,7 @@ Start test 1?[0m
 
 ?[1;31m
 Start test 2?[0m
-> > OXO__X_OX
+> OXO__X_OX
 ---------
 | O X O |
 | _ _ X |
@@ -22,7 +22,7 @@ Start test 2?[0m
 
 ?[1;31m
 Start test 3?[0m
-> > _________
+> _________
 ---------
 | _ _ _ |
 | _ _ _ |
@@ -31,7 +31,7 @@ Start test 3?[0m
 
 ?[1;31m
 Start test 4?[0m
-> > _O__X___X
+> _O__X___X
 ---------
 | _ O _ |
 | _ X _ |
