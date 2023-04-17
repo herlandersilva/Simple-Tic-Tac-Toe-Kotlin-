@@ -255,6 +255,18 @@ files:
         }
     }
   learner_created: false
-feedback_link: https://hyperskill.org/projects/123/stages/655/implement#comment
-status: Unchecked
+- name: src/tictactoe/TicTacToe.kt
+  visible: true
+  learner_created: true
+- name: src/tictactoe/Board.kt
+  visible: true
+  learner_created: true
+- name: src/tictactoe/Util.kt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/10476#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 17 Apr 2023 00:28:41 UTC"
 record: -1
