@@ -1,8 +1,8 @@
 package tictactoe
 
-const val MOVE_PLAYER_1 = 'X'
-const val MOVE_PLAYER_2 = 'O'
-const val MOVE_NOT_PLAY_YET = '_'
+const val PLAYER_X = 'X'
+const val PLAYER_O = 'O'
+const val PLAYER_EMPTY = '_'
 
 class TicTacToe(val lines: Int, val cols: Int = lines) {
     private val board = Board(lines, cols)
@@ -20,7 +20,7 @@ class TicTacToe(val lines: Int, val cols: Int = lines) {
 
     fun checkWinner() {
         try {
-            board.checkBoard(MOVE_PLAYER_1, MOVE_PLAYER_2).message.let(::println)
+            board.checkBoard(PLAYER_X, PLAYER_O).message.let(::println)
         } catch (e: IllegalMovesException) {
             e.message.let(::println)
         }
