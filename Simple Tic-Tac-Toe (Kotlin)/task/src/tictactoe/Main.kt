@@ -3,9 +3,8 @@ package tictactoe
 fun main() {
     Util.enableToSend()
 
-    with(TicTacToe(3)) {
-        fillBoard(Util.readln().toCharArray())
-        drawTheBoard()
-        checkWinner()
-    }
+    val ticTacToe = TicTacToe(3)
+    ticTacToe.fillBoard(Util.readln().toCharArray())
+    ticTacToe.drawTheBoard()
+    ticTacToe.checkWinner()
 }
