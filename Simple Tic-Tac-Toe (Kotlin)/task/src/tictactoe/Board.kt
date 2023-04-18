@@ -11,7 +11,7 @@ data class Board(val lines: Int, val cols: Int = lines) {
     val board: MutableList<MutableList<Char>> = emptyList<MutableList<Char>>().toMutableList()
     override fun toString(): String {
         val drawing = StringBuilder()
-        drawing.appendLine(BORDER_HORIZONTAL.repeat(cols + 6))
+        drawing.appendLine(BORDER_HORIZONTAL.repeat(cols * 2 + 3))
         this.board.forEach { it ->
             drawing.appendLine(
                 it.joinToString(
@@ -22,7 +22,7 @@ data class Board(val lines: Int, val cols: Int = lines) {
                 )
             )
         }
-        drawing.appendLine(BORDER_HORIZONTAL.repeat(cols + 6))
+        drawing.appendLine(BORDER_HORIZONTAL.repeat(cols * 2 + 3))
 
         return drawing.toString()
     }
@@ -56,16 +56,16 @@ data class Board(val lines: Int, val cols: Int = lines) {
         if (wins1 && wins2) throw IllegalMovesException()
 
 
-        return if (wins1) TicTacToeMove.X_WIN
+        return if (wins1) TicTacToeMove.PLAYER_1_WIN
             else
-                if (wins2) TicTacToeMove.O_WIN
+                if (wins2) TicTacToeMove.PLAYER_2_WIN
                 else
-                    if (numMovesOfPlayer1 + numMovesOfPlayer2 == lines * cols) TicTacToeMove.DRAW
-                    else TicTacToeMove.NOT_ENDED
+                    if (numMovesOfPlayer1 + numMovesOfPlayer2 == lines * cols) TicTacToeMove.GAME_DRAW
+                    else TicTacToeMove.GAME_NOT_ENDED
     }
 
     private fun replaceEmptyCells(_move: Char): CharSequence {
-        return _move.toString().replace(PLAYER_EMPTY, CELL_EMPTY)
+        return _move.toString().replace(MOVE_NOT_PLAY_YET, CELL_EMPTY)
     }
 
     private fun checkWinner(player: Char): Boolean {
