@@ -1,0 +1,31 @@
+type: code
+files:
+- name: src/Main.kt
+  visible: true
+  text: "fun main() {\n    // write your code here    \n}"
+  learner_created: false
+- name: src/MS dehghan Solution.kt
+  visible: true
+  learner_created: true
+- name: src/Kaloyan Karaivanov Solution.kt
+  visible: true
+  learner_created: true
+- name: src/Mike Burns Solution.kt
+  visible: true
+  learner_created: true
+- name: src/Michael Heward Solution.kt
+  visible: true
+  learner_created: true
+- name: src/Alexander Khodyrev Solution.kt
+  visible: true
+  learner_created: true
+- name: src/Gehard Muiruri Solution.kt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/9045#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: "Tue, 18 Apr 2023 05:58:23 UTC"
+record: -1
+submission_language: kotlin
