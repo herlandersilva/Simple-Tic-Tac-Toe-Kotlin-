@@ -388,6 +388,12 @@ files:
         }
     }
   learner_created: true
+- name: src/tictactoe/IllegalMovesException.kt
+  visible: true
+  learner_created: true
+- name: src/tictactoe/TicTacToeMove.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/10477#comment
 status: Unchecked
 record: 3

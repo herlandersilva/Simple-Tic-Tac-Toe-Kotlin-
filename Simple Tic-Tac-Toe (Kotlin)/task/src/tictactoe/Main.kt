@@ -5,5 +5,6 @@ fun main() {
 
     val ticTacToe = TicTacToe(3)
     ticTacToe.fillBoard(Util.readln().toCharArray())
-    ticTacToe.board.draw()
+    ticTacToe.drawTheBoard()
+    ticTacToe.checkWinner()
 }
