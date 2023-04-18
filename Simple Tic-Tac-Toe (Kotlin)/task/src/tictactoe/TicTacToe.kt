@@ -25,4 +25,33 @@ class TicTacToe(val lines: Int, val cols: Int = lines) {
             e.message.let(::println)
         }
     }
+
+    fun makeMove() {
+        var makeMove = false
+        var (first, second) = Pair(0, 0)
+        do {
+            try {
+                val list = Util.readln().trim().split("\\s+".toRegex()).map (String::toInt)
+                first = list.first()
+                second = list.last()
+            } catch (_: NumberFormatException) {
+                "You should enter numbers!".let(::println)
+                continue
+            }
+
+            if (first !in 1..board.lines || second !in 1..board.cols) {
+                "Coordinates should be from 1 to %d!".format(cols).let(::println)
+                continue
+            }
+
+            makeMove = if (!board.`Check if its free to play`(first - 1, second - 1)) {
+                "This cell is occupied! Choose another one!".let(::println)
+                false
+            } else {
+                board.playing(first - 1, second - 1 , MOVE_PLAYER_1)
+                true
+            }
+
+        } while (!makeMove)
+    }
 }
