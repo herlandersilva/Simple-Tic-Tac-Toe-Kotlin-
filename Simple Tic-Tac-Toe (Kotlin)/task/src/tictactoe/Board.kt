@@ -64,6 +64,12 @@ data class Board(val lines: Int, val cols: Int = lines) {
                     else TicTacToeMove.GAME_NOT_ENDED
     }
 
+    fun `Check if its free to play`(cordLine: Int, cordCol: Int): Boolean = board[cordLine][cordCol] == MOVE_NOT_PLAY_YET
+
+    fun playing(cordLine: Int, cordCol: Int, move: Char) {
+        this.board[cordLine][cordCol] = move
+    }
+
     private fun replaceEmptyCells(_move: Char): CharSequence {
         return _move.toString().replace(MOVE_NOT_PLAY_YET, CELL_EMPTY)
     }
@@ -75,6 +81,4 @@ data class Board(val lines: Int, val cols: Int = lines) {
         val diagWin = (0 until size).all { board[it][it] == player } || (0 until size).all { board[it][size - it - 1] == player }
         return rowWin || colWin || diagWin
     }
-
-
 }
