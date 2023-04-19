@@ -430,6 +430,204 @@ files:
         }
     }
   learner_created: false
+- name: src/tictactoe/Util.kt
+  visible: true
+  text: |-
+    package tictactoe
+
+    object Util {
+        private var sendToCheck = true
+
+        fun ask(title: String): String {
+            println(title)
+            return readln().trim()
+        }
+
+        fun readln(): String {
+            if (!sendToCheck) {
+                print("> ")
+            }
+            return kotlin.io.readln()
+        }
+
+        fun disableToSend() { this.sendToCheck = false }
+        fun enableToSend() { this.sendToCheck = true }
+    }
+  learner_created: true
+- name: src/tictactoe/TicTacToe.kt
+  visible: true
+  text: |-
+    package tictactoe
+
+    const val MOVE_PLAYER_1 = 'X'
+    const val MOVE_PLAYER_2 = 'O'
+    const val MOVE_NOT_PLAY_YET = '_'
+
+    class TicTacToe(val lines: Int, val cols: Int = lines) {
+        private val board = Board(lines, cols)
+
+        override fun toString(): String {
+            return board.toString()
+        }
+
+        fun fillBoard(_moves: CharArray) {
+            val moves = _moves.toMutableList().chunked(3)
+            board.setBoard(moves)
+        }
+
+        fun drawTheBoard() = board.draw()
+
+        fun checkWinner() {
+            try {
+                board.checkBoard(MOVE_PLAYER_1, MOVE_PLAYER_2).message.let(::println)
+            } catch (e: IllegalMovesException) {
+                e.message.let(::println)
+            }
+        }
+
+        fun makeMove() {
+            var makeMove = false
+            var (first, second) = Pair(0, 0)
+            do {
+                try {
+                    val list = Util.readln().trim().split("\\s+".toRegex()).map (String::toInt)
+                    first = list.first()
+                    second = list.last()
+                } catch (_: NumberFormatException) {
+                    "You should enter numbers!".let(::println)
+                    continue
+                }
+
+                if (first !in 1..board.lines || second !in 1..board.cols) {
+                    "Coordinates should be from 1 to %d!".format(cols).let(::println)
+                    continue
+                }
+
+                makeMove = if (!board.`Check if its free to play`(first - 1, second - 1)) {
+                    "This cell is occupied! Choose another one!".let(::println)
+                    false
+                } else {
+                    board.playing(first - 1, second - 1 , MOVE_PLAYER_1)
+                    true
+                }
+
+            } while (!makeMove)
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/Board.kt
+  visible: true
+  text: |
+    package tictactoe
+
+    import kotlin.math.abs
+
+    const val CELL_EMPTY = ' '
+
+    const val BORDER_HORIZONTAL = "-"
+    const val BORDER_VERTICAL = "|"
+
+    data class Board(val lines: Int, val cols: Int = lines) {
+        val board: MutableList<MutableList<Char>> = emptyList<MutableList<Char>>().toMutableList()
+        override fun toString(): String {
+            val drawing = StringBuilder()
+            drawing.appendLine(BORDER_HORIZONTAL.repeat(cols * 2 + 3))
+            this.board.forEach { it ->
+                drawing.appendLine(
+                    it.joinToString(
+                        prefix = BORDER_VERTICAL.padEnd(2, CELL_EMPTY),
+                        postfix = BORDER_VERTICAL.padStart(2, CELL_EMPTY),
+                        separator = " ",
+                        transform = { replaceEmptyCells(it) }
+                    )
+                )
+            }
+            drawing.appendLine(BORDER_HORIZONTAL.repeat(cols * 2 + 3))
+
+            return drawing.toString()
+        }
+
+        fun draw() {
+            toString().let(::print)
+        }
+
+        fun setMove(line: Int, col: Int, play: Char) {
+            board[line][col] = play
+        }
+
+        fun setBoard(moves: List<List<Char>>) {
+            var _moves: MutableList<MutableList<Char>> = mutableListOf()
+            moves.forEach { _moves.add(it.toMutableList()) }
+            board.addAll(_moves)
+        }
+
+        fun checkBoard(player1: Char, player2: Char): TicTacToeMove {
+            var numMovesOfPlayer1 = 0
+            var numMovesOfPlayer2 = 0
+            board.forEach {
+                numMovesOfPlayer1 += it.count { move -> move == player1 }
+                numMovesOfPlayer2 += it.count { move -> move == player2 }
+            }
+
+            if (abs(numMovesOfPlayer2 - numMovesOfPlayer1) > 1) throw IllegalMovesException()
+
+            val wins1: Boolean = checkWinner(player1)
+            val wins2: Boolean = checkWinner(player2)
+            if (wins1 && wins2) throw IllegalMovesException()
+
+
+            return if (wins1) TicTacToeMove.PLAYER_1_WIN
+                else
+                    if (wins2) TicTacToeMove.PLAYER_2_WIN
+                    else
+                        if (numMovesOfPlayer1 + numMovesOfPlayer2 == lines * cols) TicTacToeMove.GAME_DRAW
+                        else TicTacToeMove.GAME_NOT_ENDED
+        }
+
+        fun `Check if its free to play`(cordLine: Int, cordCol: Int): Boolean = board[cordLine][cordCol] == MOVE_NOT_PLAY_YET
+
+        fun playing(cordLine: Int, cordCol: Int, move: Char) {
+            this.board[cordLine][cordCol] = move
+        }
+
+        private fun replaceEmptyCells(_move: Char): CharSequence {
+            return _move.toString().replace(MOVE_NOT_PLAY_YET, CELL_EMPTY)
+        }
+
+        private fun checkWinner(player: Char): Boolean {
+            val size = board.size
+            val rowWin = (0 until size).any { row -> board[row].all { it == player } }
+            val colWin = (0 until size).any { col -> board.all { it[col] == player } }
+            val diagWin = (0 until size).all { board[it][it] == player } || (0 until size).all { board[it][size - it - 1] == player }
+            return rowWin || colWin || diagWin
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/IllegalMovesException.kt
+  visible: true
+  text: |-
+    package tictactoe
+
+    const val ILLEGAL_MOVES = "Impossible"
+
+    class IllegalMovesException(message: String = ILLEGAL_MOVES) : Exception(message) {}
+  learner_created: true
+- name: src/tictactoe/TicTacToeMove.kt
+  visible: true
+  text: |-
+    package tictactoe
+
+    enum class TicTacToeMove(val state: Char, val message: String) {
+        PLAYER_1_WIN('X', "X wins"),
+        PLAYER_2_WIN('O', "O wins"),
+        GAME_DRAW('D', "Draw"),
+        GAME_NOT_ENDED('G', "Game not finished");
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/10479#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Wed, 19 Apr 2023 13:35:16 UTC"
 record: -1

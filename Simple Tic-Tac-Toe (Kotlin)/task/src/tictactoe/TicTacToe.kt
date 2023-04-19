@@ -18,11 +18,21 @@ class TicTacToe(val lines: Int, val cols: Int = lines) {
 
     fun drawTheBoard() = board.draw()
 
-    fun checkWinner() {
-        try {
-            board.checkBoard(MOVE_PLAYER_1, MOVE_PLAYER_2).message.let(::println)
+    fun checkWinner(): Boolean {
+        return try {
+            when (val check = board.checkBoard(MOVE_PLAYER_1, MOVE_PLAYER_2)) {
+                TicTacToeMove.PLAYER_1_WIN,
+                TicTacToeMove.PLAYER_2_WIN,
+                TicTacToeMove.GAME_DRAW -> {
+                    check.message.let(::println)
+                    true
+                }
+
+                else -> false
+            }
         } catch (e: IllegalMovesException) {
             e.message.let(::println)
+            true
         }
     }
 
@@ -48,7 +58,7 @@ class TicTacToe(val lines: Int, val cols: Int = lines) {
                 "This cell is occupied! Choose another one!".let(::println)
                 false
             } else {
-                board.playing(first - 1, second - 1 , MOVE_PLAYER_1)
+                board.playing(first - 1, second - 1 , board.`Check next player to make a move`())
                 true
             }
 

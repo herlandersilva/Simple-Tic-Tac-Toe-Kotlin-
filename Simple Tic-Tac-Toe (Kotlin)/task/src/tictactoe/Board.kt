@@ -31,10 +31,6 @@ data class Board(val lines: Int, val cols: Int = lines) {
         toString().let(::print)
     }
 
-    fun setMove(line: Int, col: Int, play: Char) {
-        board[line][col] = play
-    }
-
     fun setBoard(moves: List<List<Char>>) {
         var _moves: MutableList<MutableList<Char>> = mutableListOf()
         moves.forEach { _moves.add(it.toMutableList()) }
@@ -65,6 +61,15 @@ data class Board(val lines: Int, val cols: Int = lines) {
     }
 
     fun `Check if its free to play`(cordLine: Int, cordCol: Int): Boolean = board[cordLine][cordCol] == MOVE_NOT_PLAY_YET
+
+    fun `Check next player to make a move`(): Char {
+        var numOfEmptyCells = 0
+        board.forEach {
+            numOfEmptyCells += it.count { move -> move == MOVE_NOT_PLAY_YET }
+        }
+
+        return if (numOfEmptyCells % 2 == 0) MOVE_PLAYER_2 else MOVE_PLAYER_1
+    }
 
     fun playing(cordLine: Int, cordCol: Int, move: Char) {
         this.board[cordLine][cordCol] = move
